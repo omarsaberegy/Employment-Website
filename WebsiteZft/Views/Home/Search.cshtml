@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WebsiteZft.Models.Job>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h1>Search Results</h1>
+        </div>
+
+        <div class="row panel-body">
+            @*<h5>@Html.DisplayFor(modelItem => item.CategoryDescreption)</h5>*@
+
+            @foreach (var subItem in Model)
+            {
+                <div class="col-md-3 thumbnail" style="margin-left:20px; margin-bottom:30px; min-height:380px;">
+                    <img src="~/Uploads/@subItem.JobImage" />
+                    <h3>@Html.DisplayFor(modelItem => subItem.JobName)</h3>
+                    <h4>"@Html.DisplayFor(modelItem=>subItem.Category.CategoryName)"</h4>
+                    @*<h5>@Html.DisplayFor(modelItem => subItem.JobContent)</h5>*@
+
+                    @Html.ActionLink("Details", "JobDetails", new { JobId = subItem.Id }, new { @class = "btn btn-primary" })
+                </div>
+            }
+        </div>
+    </div>
+

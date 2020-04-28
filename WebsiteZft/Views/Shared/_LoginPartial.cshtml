@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNet.Identity
+@using WebsiteZft.Models
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        var db = new ApplicationDbContext();
+        var UserID = User.Identity.GetUserId();
+        var current = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+        @Html.AntiForgeryToken()
+    
+    
+    
+    <ul class="nav navbar-nav navbar-right" >
+     
+
+        <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                
+                    <img src="~/Uploads/@current.UserImage"
+                         class="thumbnail" style="width:48px; height:48px; display:inline" />
+                    <strong >Hello , @current.UserName</strong>
+                    <span class="glyphicon glyphicon-chevron-down" ></span>
+                
+            </a>
+            <ul class="dropdown-menu " style="background-color: #d9edf7; border-style:groove; border-bottom-left-radius:5px; border-bottom-right-radius:5px" >
+                <li>
+                    <div style="padding: 10px; padding-bottom: 0px; width: 350px; background-color: #d9edf7">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                
+                                    <span>
+                                        <img src="~/Uploads/@current.UserImage"
+                                             class="thumbnail" style="width:200px; height:100px; " />
+                                    </span>
+                                
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="text-center">
+                                    <strong>
+                                        @current.UserName
+                                    </strong>
+                                </p>
+                                @if (current.UserType == "Publisher")
+                                 {
+                                    @*btn btn-info btn-block*@
+                                      <a href="~/Job/Index " class="btn btn-info btn-block   text-center">Jobs you Published</a>
+                                     <a href="~/Job/Create " class="btn btn-info btn-block  text-center">Puplish a new Job Apportunity</a>
+                                 }
+                                 @if (current.UserType == "Searcher") 
+                                 {
+                                    <a href=" ~/Home/GetJobsApplicationsByUser" class=" btn btn-info  btn-block text-center">Jobs you apply for</a>
+                                 }
+                                 @if (current.UserType == "Administrator")
+                                  {
+                                      <a href="~/Home/Management " class=" btn btn-info  btn-block text-center">Management</a>
+                                  }
+                                <a href="~/Account/EditAccount" class="btn btn-primary btn-block text-center" >Edit your account</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="divider"></li>
+                <li class="text-center">
+                    <div>
+                        <div class="row ">
+                            <div class="col-lg-12 ">
+                                <p>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" style="width:80%" class="btn btn-danger  text-center">Log off</a>
+
+                                </p>
+                          </div>
+
+                       </div>
+                 </div>
+</li>
+            </ul>
+        </li>
+    </ul>
+    
+                    
+                    
+                    
+    
+    }
+}
+
+
+else
+{
+   
+
+
+
+    <ul class="nav navbar-nav navbar-right" >
+
+
+        <li>
+            <a href="~/Account/Login">
+                <i class="glyphicon glyphicon-user"></i>
+
+                LogIn
+            </a>
+        </li>
+
+
+
+
+        <li>
+            <a href="~/Account/Register">
+                <i class="fa fa-lock"></i>
+
+                Register
+            </a>
+        </li>
+
+
+    </ul>
+
+
+
+
+}
+
+
+

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebsiteZft.Models.JobsGrouping>
+
+@{
+    ViewBag.Title = "DisplayPublisherJobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color: #428bca ">Jobs that have Applicants : </h2>
+
+@foreach(var e in Model)
+{
+    <h3>@e.JobName</h3>
+<table class="table table-striped table-hover table-bordered">
+    <tr>
+        <th>
+           Applicant Name 
+        </th>
+        <th>
+            Message
+        </th>
+        <th>
+            C.V
+        </th>
+        <th>
+            Apply Date
+        </th>
+
+    </tr>
+    
+    @foreach(var a in e.Items)
+    {
+      <tr>
+         <td>
+           @a.user.UserName 
+         </td>
+
+         <td>
+              @a.Message
+         </td>
+          <td>
+              <a href="@(Url.Content("~/Uploads/"+a.CV))">@a.CV</a>
+          </td>
+         <td>
+              @a.ApplyDate
+         </td>
+     </tr>
+        
+    }
+
+
+</table>
+}
+
+
+
+
+@*<hr/>
+<h2 style="color: #428bca ">All Jobs Published By you : </h2>
+
+
+
+@Html.DropDownList("CategoryId", string.Empty)*@
+
+
+  
+

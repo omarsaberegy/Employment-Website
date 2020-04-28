@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebsiteZft.Models.Job>
+
+@{
+    ViewBag.Title = "GetPublic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Free Jobs</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JobName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobContent)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JobName)
+        </td>
+        <td>
+            <img src="~/Uploads/@Html.DisplayFor(modelItem => item.JobImage)"
+                 class="thumbnail" style="width:48px; height:48px" />
+        </td>
+        <td>
+
+            @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(modelItem => item.JobContent).ToString()))
+
+        </td>
+       
+        
+    </tr>
+}
+
+</table>

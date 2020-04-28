@@ -1,0 +1,98 @@
+﻿@model WebsiteZft.Models.Job
+
+@{
+    ViewBag.Title = "JobDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    
+}
+<h2>Details of the Job </h2>
+
+
+<div class="form-horizontal">
+    <div class="alert alert-danger" id="error-div" style="display:none">
+        <span id="view-err">
+
+        </span>
+    </div>
+
+    </div>
+    <div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.JobName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobImage)
+            </dt>
+
+            <dd>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.JobImage)"
+                     class="thumbnail" style="width:128px; height:128px" />
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.JobContent)
+            </dt>
+
+            <dd>
+                @Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => model.JobContent).ToString()))
+            </dd>
+
+        </dl>
+    </div>
+<div class="row">
+    <div class="col-md-6">
+
+    
+
+
+    <p class="text-center">
+        @*@Html.ActionLink("Apply for this Job", "Apply", new { id = Model.Id}, new { @class = "btn btn-success save" })*@ 
+        <a href='@Url.Action("Apply", "Home", new { id = Model.Id })' class='btn btn-success' >Apply for this Job</a>
+|
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-default" })
+    </p>
+        </div>
+    </div>
+
+
+@*<script src="~/Scripts/jquery.js"></script>
+
+    <script>
+
+
+        $(function () {
+            //var x = document.getElementsByClassName("save");
+            $("#save").click(function () {
+                var userid = User.Identity.GetUserId();
+                var floor = @Html.Raw(Model.UserID);
+                if (floor == userid) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").append("you can't apply");
+                    return false;
+                }
+             
+            });
+        });
+
+
+    </script>*@

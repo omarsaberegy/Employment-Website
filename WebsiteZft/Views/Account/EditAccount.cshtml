@@ -1,0 +1,116 @@
+﻿@model WebsiteZft.Models.EditProfileViewModel
+
+@{
+    ViewBag.Title = "EditAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Account</h2>
+
+@using (Html.BeginForm("EditAccount", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="alert alert-danger" id="error-div" style="display:none">
+            <span id="view-err">
+
+            </span>
+        </div> 
+
+        <div class="alert-info">
+            <h3>@ViewBag.Message</h3>
+        </div>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UserImage)
+    
+    
+        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserImage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="load" id="myImage" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CurrentPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CurrentPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewPassword, new { @class = "col-md-2 control-label " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.NewPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-md-2 control-label " })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default btn-success " style="width:10%"  id="save"/>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery.js"></script>
+
+<script>
+    $(function () {
+        $("#save").click(function () {
+
+            //Check if the input is Empty
+            //if ($("#JobImage").val() == "") {
+            //    $("#error-div").fadeIn();
+            //    $("#view-err").append("");
+            //    return false;
+            //}
+
+            if ($("#myImage").val() != "") {
+                //Check if the Image extension is valid
+                var filename = document.getElementById("myImage").value;
+                var extensionImg = filename.substr(filename.lastIndexOf('.') + 1);
+                var validExtensions = ['jpg', 'png', 'gif', 'bmp', 'tif', 'jpeg' ,'JPG'];
+                if ($.inArray(extensionImg, validExtensions) == -1) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").append("Please Select image with a True Extension");
+                    return false;
+                }
+
+                //Check if the Image Size is valid (2 mb)
+                var myFileSize = document.getElementById("myImage").files[0].size / 1024 / 1024;
+
+                if (myFileSize > 2) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").append("Please Select image with a minimum 2Mb size");
+                    return false;
+                }
+            }
+        });
+    });
+</script>

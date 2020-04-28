@@ -1,0 +1,126 @@
+﻿@model WebsiteZft.Models.Job
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Edit your Job Information</h2>
+
+@using (Html.BeginForm("Edit", "Job", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <div class="form-horizontal">
+        
+        @*That's for not selecting image on editing*@ 
+        <div class="alert alert-danger" id="error-div" style="display:none">
+            <span id="view-err">
+
+            </span>
+        </div>
+
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.JobImage)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JobName)
+                @Html.ValidationMessageFor(model => model.JobName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobImage, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="upload" id="myImage" />
+                @Html.ValidationMessageFor(model => model.JobImage)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobContent, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.JobContent, new { @id = "JobContent" })
+                @Html.ValidationMessageFor(model => model.JobContent)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, "CategoryId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryId", String.Empty)
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" id="save" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+<script src="~/Scripts/jquery.js"></script>
+<script>
+    CKEDITOR.replace("JobContent");
+</script>
+
+
+  <script>
+    $(function () {
+        $("#save").click(function () {
+           
+            //Check if the input is Empty
+            //if ($("#JobImage").val() == "") {
+            //    $("#error-div").fadeIn();
+            //    $("#view-err").append("");
+            //    return false;
+            //}
+
+            if ($("#myImage").val() != "") {
+                //Check if the Image extension is valid
+                var filename = document.getElementById("myImage").value;
+                var extensionImg = filename.substr(filename.lastIndexOf('.') + 1);
+                var validExtensions = ['jpg', 'png', 'gif', 'bmp' , 'tif','jpeg'];
+                if ($.inArray(extensionImg, validExtensions) == -1) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").append("Please Select image with a True Extension");
+                    return false;
+                }
+
+                //Check if the Image Size is valid (2 mb)
+                var myFileSize = document.getElementById("myImage").files[0].size / 1024 / 1024;
+
+                if (myFileSize > 2) {
+                    $("#error-div").fadeIn();
+                    $("#view-err").append("Please Select image with a minimum 2Mb size");
+                    return false;
+                }
+            }
+        });
+    });
+    </script>
+    
+ 
+    
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebsiteZft.Models.Category>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron " style="background-color: #d9edf7; ">
+    <h1>Welcome to ShA8lni Website </h1>
+    <p class="lead">ShA8lni is a Website Where you will find a collection of jobs which you can apply for .</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-large">More info &raquo;</a></p>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h1>@Html.DisplayFor(modelItem => item.CategoryName)</h1>
+        </div>
+
+        <div class="row panel-body">
+            @*<h5>@Html.DisplayFor(modelItem => item.CategoryDescreption)</h5>*@
+
+            @foreach (var subItem in item.Jobs)
+            {
+                <div class="col-md-3 thumbnail" style="margin-left:20px; margin-bottom:30px; min-height:380px;">
+                    <img src="~/Uploads/@subItem.JobImage" style="min-height:280px" />
+                    <h3>@Html.DisplayFor(modelItem => subItem.JobName)</h3>
+                    @*<h5>@Html.DisplayFor(modelItem => subItem.JobContent)</h5>*@
+                  @Html.ActionLink("Details", "JobDetails", new { JobId = subItem.Id }, new { @class = "btn btn-primary" }) 
+                </div>
+            }
+        </div>
+    </div>
+}
